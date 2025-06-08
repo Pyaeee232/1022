@@ -5,19 +5,17 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 GROUP_ID = -1002512880634  # Replace with your actual group ID
 BOT_USERNAME = "https://t.me/share/url?url=t.me/Mamalay223_bot?start=2222 အထန်မမလေးများသီးသန့် မန်ဘာဝင်ရန် join ထားပါ"
 
-# Store user click data
 user_click_data = {}  # Format: user_id: {"count": int, "cooldown": timestamp}
 
-
-# --- /start command ---
+# /start command
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     username = user.first_name or user.username
 
     keyboard = [
         [
-            InlineKeyboardButton("💦 ကြော်ငြာ ", url="https://t.me/GenkiMinerBot/GenkiMiner?startapp=_dOt50SJ"),
-            InlineKeyboardButton("📤 Share (4/1)", url="https://t.me/share/url?url=t.me/Mamalay223_bot?start=2222 အထန်မမလေးများသီးသန့် မန်ဘာဝင်ရန် join ထားပါ"),
+            InlineKeyboardButton("💦 ကြော်ငြာ", url="https://t.me/GenkiMinerBot/GenkiMiner?startapp=_dOt50SJ"),
+            InlineKeyboardButton("📤 Share (4/1)", url=BOT_USERNAME),
         ],
         [InlineKeyboardButton(" မန်ဘာဝင်မယ် ", callback_data="check_now")],
     ]
@@ -25,18 +23,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = (
         f"🥵 <b>မင်္ဂလာပါနော် အထန်ကြီး {username}ရေ...</b> 😘\n\n"
         "ဒီမှာ VIP ၅ ခုရှိတယ်နော် 💋\n\n"
-    "1️⃣ အထန်မလေးတွေနဲ့ 💦 Free Sex Chat*\n"
-    "2️⃣ မမကြီးတွေနဲ့ 😍 Free ချက်*\n"
-    "3️⃣ ကြိုက်ကုန်းမမများ 👙 VIP GP*\n"
-    "4️⃣ စပယားနေသူများ 🌶️🔥\n"
-    "5️⃣ အန်တီကြီးများ 👵💦 သီးသန့် VIP*\n\n"
-    "👇 ကြိုက်ရာ VIP 3 ခုကို Free ဝင်လို့ရပါတယ်* ✅"
+        "1️⃣ အထန်မလေးတွေနဲ့ 💦 Free Sex Chat*\n"
+        "2️⃣ မမကြီးတွေနဲ့ 😍 Free ချက်*\n"
+        "3️⃣ ကြိုက်ကုန်းမမများ 👙 VIP GP*\n"
+        "4️⃣ စပယားနေသူများ 🌶️🔥\n"
+        "5️⃣ အန်တီကြီးများ 👵💦 သီးသန့် VIP*\n\n"
+        "👇 ကြိုက်ရာ VIP 3 ခုကို Free ဝင်လို့ရပါတယ်* ✅"
     )
 
     await update.message.reply_html(text, reply_markup=InlineKeyboardMarkup(keyboard))
 
 
-# --- Button handler ---
+# Button click handler
 async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     user = query.from_user
@@ -45,24 +43,21 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if query.data == "check_now":
         now = time.time()
-
-        # Get user click data or init
         data = user_click_data.get(user_id, {"count": 0, "cooldown": 0})
 
-        # Cooldown active?
         if data["cooldown"] > now:
-            remaining = int((data["cooldown"] - now) / 60)
-            await query.answer(f"▶ ကြော်ငြာ အပြီးထိ ကြည့်ပေးပါ ◀\n\n"
-    "▶ Share 4 ကြိမ် လုပ်ပါ ◀\n\n"
-    "အကုန်ပြီးသွားရင် မန်ဘာဝင်လို့ရပါပြီ✅💦", show_alert=True)
+            await query.answer(
+                "▶ ကြော်ငြာ အပြီးထိ ကြည့်ပေးပါ ◀\n\n"
+                "▶ Share 4 ကြိမ် လုပ်ပါ ◀\n\n"
+                "အကုန်ပြီးသွားရင် မန်ဘာဝင်လို့ရပါပြီ✅💦",
+                show_alert=True
+            )
             return
 
-        # Add click
         data["count"] += 1
 
         if data["count"] >= 2:
-            # Set cooldown (30 min)
-            data["cooldown"] = now + 180
+            data["cooldown"] = now + 180  # 3 mins cooldown (change to 1800 for 30 mins)
             data["count"] = 0
             await query.answer("💋လုပ်ဆောင်ချက် စစ်ဆေးနေပါပြီ..🟢", show_alert=True)
         else:
@@ -79,8 +74,8 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
                 keyboard = [
                     [
-                        InlineKeyboardButton("💦  ကြော်ငြာ ", url="https://t.me/GenkiMinerBot/GenkiMiner?startapp=_dOt50SJ"),
-                        InlineKeyboardButton("📤 Share (4/2) ",  url="https://t.me/share/url?url=t.me/Mamalay223_bot?start=2222 အထန်မမလေးများသီးသန့် မန်ဘာဝင်ရန် join ထားပါ"),
+                        InlineKeyboardButton("💦 ကြော်ငြာ", url="https://t.me/GenkiMinerBot/GenkiMiner?startapp=_dOt50SJ"),
+                        InlineKeyboardButton("📤 Share (4/2)", url=BOT_USERNAME),
                     ],
                     [InlineKeyboardButton(" မန်ဘာဝင်မယ် ", callback_data="check_now")],
                 ]
@@ -95,9 +90,9 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await query.answer("📌 VIP ဝင်ရန် Share 4 ကြိမ်လုပ်ပေးပါ‌နော် 😘", show_alert=True)
 
 
-# --- Main ---
+# Main app runner
 def main():
-    app = Application.builder().token("7863260296:AAG38lfZ5UDZp1RyPOTsFS2TNdf4UOoVsMk").build()
+    app = Application.builder().token("YOUR_BOT_TOKEN").build()
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(button_click))
