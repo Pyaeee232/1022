@@ -92,7 +92,7 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # Main app runner
 def main():
-    app = Application.builder().token("YOUR_BOT_TOKEN").build()
+    app = Application.builder().token("7863260296:AAG38lfZ5UDZp1RyPOTsFS2TNdf4UOoVsMk").build()
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(button_click))
